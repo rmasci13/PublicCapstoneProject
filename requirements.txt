@@ -1,0 +1,26 @@
+# Core data handling
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Machine learning / preprocessing
+scikit-learn>=1.3.0
+
+# Image handling
+Pillow>=10.0.0
+imagehash>=4.3.1
+
+# PyTorch (CUDA build) -- install separately, see note below
+torch>=2.1.0
+torchvision>=0.16.0
+torchaudio>=2.1.0
+
+# Progress bars / utilities
+tqdm>=4.66.0
+
+# Jupyter support (if running notebooks outside PyCharm's built-in support)
+jupyter>=1.0.0
+ipykernel>=6.25.0
