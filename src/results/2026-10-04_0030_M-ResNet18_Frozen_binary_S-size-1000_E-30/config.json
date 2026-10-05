@@ -1,0 +1,11 @@
+{
+  "classification_mode": "binary",
+  "sample_size": 1000,
+  "image_size": 224,
+  "batch_size": 32,
+  "epochs": 30,
+  "lr": 0.001,
+  "use_scheduler": true,
+  "model": "ResNet18_Frozen",
+  "use_class_weights": true
+}

@@ -1,0 +1,13 @@
+{
+  "classification_mode": "binary",
+  "sample_size": 10000,
+  "image_size": 224,
+  "batch_size": 32,
+  "epochs": 30,
+  "lr": 0.001,
+  "use_scheduler": true,
+  "model": "CustomCNN",
+  "use_class_weights": true,
+  "tuning_param": "dropout",
+  "tuning_value": 0.6
+}

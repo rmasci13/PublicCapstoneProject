@@ -1,0 +1,99 @@
+Sample size: 7501 | Train: 6000 | Val: 1501
+Class counts (sample):
+diagnosis
+NV      3812
+MEL     1339
+BCC      984
+BKL      777
+AK       257
+SCC      186
+VASC      75
+DF        71
+Name: count, dtype: int64
+Train class proportions:
+diagnosis
+NV      0.508167
+MEL     0.178500
+BCC     0.131167
+BKL     0.103500
+AK      0.034333
+SCC     0.024833
+VASC    0.010000
+DF      0.009500
+Name: proportion, dtype: float64
+
+Val class proportions:
+diagnosis
+NV      0.508328
+MEL     0.178548
+BCC     0.131246
+BKL     0.103931
+AK      0.033977
+SCC     0.024650
+VASC    0.009993
+DF      0.009327
+Name: proportion, dtype: float64
+CustomCNN(
+  (features): Sequential(
+    (0): Conv2d(3, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (4): Conv2d(16, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (5): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (6): ReLU()
+    (7): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (8): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (9): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (10): ReLU()
+    (11): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (12): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (13): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (14): ReLU()
+    (15): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (16): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (17): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (18): ReLU()
+    (19): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (20): AdaptiveAvgPool2d(output_size=(4, 4))
+  )
+  (classifier): Sequential(
+    (0): Flatten(start_dim=1, end_dim=-1)
+    (1): Linear(in_features=4096, out_features=128, bias=True)
+    (2): ReLU()
+    (3): Dropout(p=0.4, inplace=False)
+    (4): Linear(in_features=128, out_features=8, bias=True)
+  )
+)
+Using class weights: {np.int64(0): np.float32(0.7), np.int64(1): np.float32(0.246), np.int64(2): np.float32(0.953), np.int64(3): np.float32(3.641), np.int64(4): np.float32(1.208), np.int64(5): np.float32(13.158), np.int64(6): np.float32(12.5), np.int64(7): np.float32(5.034)}
+Epoch 1/50 | train_loss=2.0999 train_acc=0.243 | val_loss=1.8497 val_acc=0.316 | lr=1.00e-03 | epoch_time=118.1 | running_time=118.1
+Epoch 2/50 | train_loss=2.0234 train_acc=0.274 | val_loss=1.8056 val_acc=0.336 | lr=1.00e-03 | epoch_time=118.4 | running_time=236.5
+Epoch 3/50 | train_loss=2.0039 train_acc=0.321 | val_loss=2.0911 val_acc=0.203 | lr=1.00e-03 | epoch_time=116.0 | running_time=352.5
+Epoch 4/50 | train_loss=1.9800 train_acc=0.357 | val_loss=1.8137 val_acc=0.413 | lr=1.00e-03 | epoch_time=123.9 | running_time=476.4
+Epoch 5/50 | train_loss=2.0358 train_acc=0.183 | val_loss=1.8869 val_acc=0.241 | lr=1.00e-03 | epoch_time=117.1 | running_time=593.5
+Epoch 6/50 | train_loss=2.0129 train_acc=0.318 | val_loss=1.6736 val_acc=0.471 | lr=1.00e-03 | epoch_time=114.5 | running_time=708.0
+Epoch 7/50 | train_loss=2.0182 train_acc=0.318 | val_loss=1.7341 val_acc=0.452 | lr=1.00e-03 | epoch_time=117.9 | running_time=825.9
+Epoch 8/50 | train_loss=2.0231 train_acc=0.328 | val_loss=1.9619 val_acc=0.336 | lr=1.00e-03 | epoch_time=118.1 | running_time=944.0
+Epoch 9/50 | train_loss=1.9870 train_acc=0.366 | val_loss=1.6473 val_acc=0.488 | lr=1.00e-03 | epoch_time=116.0 | running_time=1060.0
+Epoch 10/50 | train_loss=1.9704 train_acc=0.399 | val_loss=1.6747 val_acc=0.434 | lr=1.00e-03 | epoch_time=120.5 | running_time=1180.5
+Epoch 11/50 | train_loss=1.9845 train_acc=0.332 | val_loss=1.7306 val_acc=0.450 | lr=1.00e-03 | epoch_time=127.5 | running_time=1308.0
+Epoch 12/50 | train_loss=1.9541 train_acc=0.364 | val_loss=1.6530 val_acc=0.407 | lr=1.00e-03 | epoch_time=124.4 | running_time=1432.4
+Epoch 13/50 | train_loss=1.9523 train_acc=0.331 | val_loss=1.7277 val_acc=0.418 | lr=1.00e-03 | epoch_time=122.3 | running_time=1554.7
+Epoch 14/50 | train_loss=1.9364 train_acc=0.343 | val_loss=1.7661 val_acc=0.396 | lr=5.00e-04 | epoch_time=143.4 | running_time=1698.1
+Epoch 15/50 | train_loss=1.9379 train_acc=0.325 | val_loss=1.7005 val_acc=0.432 | lr=5.00e-04 | epoch_time=141.2 | running_time=1839.3
+Epoch 16/50 | train_loss=1.9399 train_acc=0.329 | val_loss=1.7711 val_acc=0.339 | lr=5.00e-04 | epoch_time=146.5 | running_time=1985.8
+Epoch 17/50 | train_loss=1.9494 train_acc=0.361 | val_loss=1.7607 val_acc=0.352 | lr=5.00e-04 | epoch_time=133.4 | running_time=2119.2
+Epoch 18/50 | train_loss=1.9259 train_acc=0.318 | val_loss=1.7291 val_acc=0.387 | lr=2.50e-04 | epoch_time=116.5 | running_time=2235.7
+Epoch 19/50 | train_loss=1.8976 train_acc=0.329 | val_loss=1.6962 val_acc=0.406 | lr=2.50e-04 | epoch_time=124.8 | running_time=2360.5
+Epoch 20/50 | train_loss=1.8649 train_acc=0.310 | val_loss=1.6768 val_acc=0.441 | lr=2.50e-04 | epoch_time=117.0 | running_time=2477.5
+Epoch 21/50 | train_loss=1.8852 train_acc=0.334 | val_loss=1.7569 val_acc=0.404 | lr=2.50e-04 | epoch_time=112.1 | running_time=2589.6
+Epoch 22/50 | train_loss=1.8782 train_acc=0.325 | val_loss=1.7299 val_acc=0.417 | lr=1.25e-04 | epoch_time=114.7 | running_time=2704.2
+Epoch 23/50 | train_loss=1.8252 train_acc=0.344 | val_loss=1.6754 val_acc=0.428 | lr=1.25e-04 | epoch_time=109.6 | running_time=2813.8
+Epoch 24/50 | train_loss=1.8438 train_acc=0.326 | val_loss=1.6776 val_acc=0.433 | lr=1.25e-04 | epoch_time=121.1 | running_time=2934.9
+Epoch 25/50 | train_loss=1.8326 train_acc=0.331 | val_loss=1.6587 val_acc=0.410 | lr=1.25e-04 | epoch_time=132.3 | running_time=3067.2
+Epoch 26/50 | train_loss=1.8281 train_acc=0.333 | val_loss=1.7169 val_acc=0.385 | lr=6.25e-05 | epoch_time=141.5 | running_time=3208.7
+Epoch 27/50 | train_loss=1.8489 train_acc=0.316 | val_loss=1.6674 val_acc=0.410 | lr=6.25e-05 | epoch_time=124.6 | running_time=3333.3
+Epoch 28/50 | train_loss=1.8323 train_acc=0.315 | val_loss=1.6693 val_acc=0.414 | lr=6.25e-05 | epoch_time=121.3 | running_time=3454.6
+Epoch 29/50 | train_loss=1.8282 train_acc=0.322 | val_loss=1.6758 val_acc=0.408 | lr=6.25e-05 | epoch_time=127.4 | running_time=3582.0
+Epoch 30/50 | train_loss=1.8505 train_acc=0.324 | val_loss=1.6837 val_acc=0.402 | lr=3.13e-05 | epoch_time=122.9 | running_time=3704.8
+Epoch 31/50 | train_loss=1.8105 train_acc=0.322 | val_loss=1.6471 val_acc=0.412 | lr=3.13e-05 | epoch_time=118.6 | running_time=3823.4

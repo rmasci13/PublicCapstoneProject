@@ -1,0 +1,12 @@
+{
+  "classification_mode": "binary",
+  "sample_size": 25331,
+  "image_size": 224,
+  "batch_size": 32,
+  "epochs": 50,
+  "lr": 1e-05,
+  "use_scheduler": true,
+  "model": "ResNet18_Tune",
+  "use_class_weights": true,
+  "weight_balance_dampening": true
+}
