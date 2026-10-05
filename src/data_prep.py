@@ -59,3 +59,9 @@ if __name__ == '__main__':
         print(df.shape)
         print(df['diagnosis'].value_counts())
         df.to_csv(out_path, index=False)
+
+    df = pd.read_csv('../data/processed/df_merged.csv')
+    if 'BinaryTarget' not in df.columns:
+        df['BinaryTarget'] = (df['risk_level'] == 'Malignant/Pre-Malignant').astype(int)
+        df.to_csv(out_path, index=False)
+        print("Added BinaryTarget column and saved.")

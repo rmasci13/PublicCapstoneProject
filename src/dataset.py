@@ -4,18 +4,20 @@ into train/val sets without lesion leakage."""
 import os
 from torch.utils.data import Dataset
 from torchvision import transforms
-from sklearn.model_selection import GroupShuffleSplit
+from sklearn.model_selection import GroupShuffleSplit, StratifiedGroupKFold
 from PIL import Image
 
-from config import LABEL_COLS, SAMPLE_SIZE
+from config import LABEL_COLS, SAMPLE_SIZE, CLASSIFICATION_MODE, TARGET_COL_BY_MODE, BINARY_CLASSES
 
 
 class LesionDataset(Dataset):
-    def __init__(self, df, image_dir, transform=None):
+    def __init__(self, df, image_dir, transform=None, classification_mode=CLASSIFICATION_MODE):
         self.df = df.reset_index(drop=True)
         self.image_dir = image_dir
         self.transform = transform
-        self.classes = LABEL_COLS  # fixed order, same across every split
+        self.classification_mode = classification_mode
+        self.target_col = TARGET_COL_BY_MODE[classification_mode]
+        self.classes = BINARY_CLASSES if classification_mode == 'binary' else LABEL_COLS
 
     def __len__(self):
         return len(self.df)
@@ -26,25 +28,28 @@ class LesionDataset(Dataset):
         image = Image.open(img_path).convert("RGB")
         if self.transform:
             image = self.transform(image)
-        label = int(row["target"])  # use the pre-computed encoding directly
+        label = int(row[self.target_col])
         return image, label
 
 
-def make_tiny_sample(df_merged, sample_size=SAMPLE_SIZE, random_state=42):
-    """Stratified sample by diagnosis, grouped so no lesion is split across
-    the sample (keeps this consistent with the grouped-split approach even
-    at tiny scale)."""
+def make_tiny_sample(df_merged, sample_size=SAMPLE_SIZE, stratify_col="diagnosis", random_state=42):
+    """Stratified sample by stratify_col, grouped so no lesion is split
+    across the sample. Use stratify_col='diagnosis' for multiclass mode,
+    'risk_level' for binary mode."""
     frac = sample_size / len(df_merged)
-    sample = df_merged.groupby("diagnosis", group_keys=False).sample(
+    sample = df_merged.groupby(stratify_col, group_keys=False).sample(
         frac=frac, random_state=random_state
     )
     return sample.reset_index(drop=True)
 
 
-def train_val_split(sample_df, val_frac=0.2, random_state=42):
-    """Group-aware split so no lesion_id_filled appears in both train and val."""
-    gss = GroupShuffleSplit(n_splits=1, test_size=val_frac, random_state=random_state)
-    train_idx, val_idx = next(gss.split(sample_df, groups=sample_df["lesion_id_filled"]))
+def train_val_split(sample_df, val_frac=0.2, stratify_col="diagnosis", random_state=42):
+    """Group-aware, stratified split. stratify_col should match whatever
+    make_tiny_sample used, so train/val proportions line up with how the
+    sample itself was balanced."""
+    n_splits = round(1 / val_frac)  # val_frac=0.2 -> 5 folds, take 1 as val
+    sgkf = StratifiedGroupKFold(n_splits=n_splits, shuffle=True, random_state=random_state)
+    train_idx, val_idx = next(sgkf.split(sample_df, y=sample_df[stratify_col], groups=sample_df["lesion_id_filled"]))
     train_df = sample_df.iloc[train_idx].reset_index(drop=True)
     val_df = sample_df.iloc[val_idx].reset_index(drop=True)
 
