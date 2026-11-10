@@ -1,0 +1,18 @@
+{
+  "classification_mode": "binary",
+  "sample_size": 25331,
+  "image_size": 224,
+  "batch_size": 32,
+  "epochs": 20,
+  "lr": 1e-05,
+  "use_scheduler": true,
+  "model": "EfficientNetB0_Tune",
+  "use_class_weights": true,
+  "tuning_param": "lr",
+  "tuning_value": 1e-05,
+  "requested_epochs": 50,
+  "actual_epochs": 20,
+  "early_stopped": true,
+  "best_epoch": 13,
+  "best_val_loss": 0.3756468475712085
+}

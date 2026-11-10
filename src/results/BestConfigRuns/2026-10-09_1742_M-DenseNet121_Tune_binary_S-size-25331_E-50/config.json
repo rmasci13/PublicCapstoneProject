@@ -1,0 +1,17 @@
+{
+  "classification_mode": "binary",
+  "sample_size": 25331,
+  "image_size": 288,
+  "batch_size": 16,
+  "epochs": 50,
+  "lr": 3e-05,
+  "use_scheduler": true,
+  "model": "DenseNet121_Tune",
+  "use_class_weights": true,
+  "weight_balance_dampening": false,
+  "requested_epochs": 50,
+  "actual_epochs": 10,
+  "early_stopped": true,
+  "best_epoch": 3,
+  "best_val_loss": 0.3722846831110123
+}

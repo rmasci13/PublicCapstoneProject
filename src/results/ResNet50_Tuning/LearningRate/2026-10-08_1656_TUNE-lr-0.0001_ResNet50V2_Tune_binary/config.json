@@ -1,0 +1,19 @@
+{
+  "classification_mode": "binary",
+  "sample_size": 25331,
+  "image_size": 224,
+  "batch_size": 32,
+  "epochs": 9,
+  "lr": 0.0001,
+  "use_scheduler": true,
+  "model": "ResNet50V2_Tune",
+  "use_class_weights": true,
+  "tuning_param": "lr",
+  "tuning_value": 0.0001,
+  "weight_balance_dampening": false,
+  "requested_epochs": 50,
+  "actual_epochs": 9,
+  "early_stopped": true,
+  "best_epoch": 2,
+  "best_val_loss": 0.3750938871751131
+}

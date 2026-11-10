@@ -1,0 +1,4 @@
+diagnosis,true_group,n,predicted_Malignant,predicted_Benign,correct_rate,mean_prob_malignant
+MEL,Malignant/Pre-Malignant,905,723,182,0.7988950276243094,0.7438294291496277
+NV,Benign,2563,389,2174,0.8482247366367538,0.3072035014629364
+BKL,Benign,537,191,346,0.6443202979515829,0.44425323605537415

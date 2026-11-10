@@ -1,0 +1,23 @@
+{
+  "model": "EfficientNetB2_Tune",
+  "image_size": 350,
+  "batch_size": 32,
+  "epochs": 50,
+  "lr": 5e-05,
+  "fractions": [
+    0.1,
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "seeds": [
+    42
+  ],
+  "use_scheduler": true,
+  "use_class_weights": true,
+  "early_stopping_patience": 7,
+  "n_train_pool": 20265,
+  "n_val": 5066,
+  "image_dir": "../data/raw/train/ISIC_2019_Training_Input"
+}
