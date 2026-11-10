@@ -1,0 +1,18 @@
+{
+  "cnn_run": "C:\\Users\\Robert\\PycharmProjects\\CapstoneProject\\src\\results\\2026-10-29_0124_M-EfficientNetB2_Tune_binary_S-size-25331_E-50",
+  "mlp_run": "C:\\Users\\Robert\\PycharmProjects\\CapstoneProject\\src\\results\\2026-10-23_0038_M-ComplexMLP_binary_S-size-25331_E-50",
+  "cnn_model": "EfficientNetB2_Tune",
+  "mlp_model": "ComplexMLP",
+  "heads": [
+    "stack",
+    "linear",
+    "mlp"
+  ],
+  "cutoff": 0.5,
+  "n_boot": 500,
+  "primary": "Stack (logits) - CV on val",
+  "n_val": 5066,
+  "n_train": 20265,
+  "cnn_auc_train": 0.9618528103816142,
+  "cnn_auc_val": 0.9162878498740514
+}

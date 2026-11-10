@@ -1,0 +1,34 @@
+=== ALL val (n=5066; cutoff 0.50 for recall/F2/accuracy) ===
+                             model    n   AUC  AUC_lo  AUC_hi  dAUC_vs_CNN  dAUC_lo  dAUC_hi  balanced_acc  malignant_recall  benign_recall    F2  mal_recall@spec0.80  mal_recall@spec0.85  mal_recall@spec0.90
+                          CNN only 5066 0.916   0.900   0.930          NaN      NaN      NaN         0.836             0.862          0.811 0.831                0.867                0.830                0.762
+                          MLP only 5066 0.806   0.782   0.829       -0.110   -0.133   -0.088         0.737             0.753          0.721 0.720                0.653                0.565                0.478
+     Stack (logits) - fit on train 5066 0.922   0.906   0.934        0.005    0.003    0.007         0.846             0.815          0.878 0.811                0.869                0.843                0.783
+        Stack (logits) - CV on val 5066 0.923   0.907   0.935        0.006    0.002    0.011         0.846             0.829          0.864 0.819                0.873                0.840                0.796
+  Linear (features) - fit on train 5066 0.912   0.897   0.924       -0.004   -0.010    0.002         0.829             0.785          0.873 0.785                0.850                0.808                0.760
+     Linear (features) - CV on val 5066 0.903   0.888   0.917       -0.013   -0.022   -0.004         0.819             0.780          0.858 0.776                0.834                0.787                0.702
+MLP head (features) - fit on train 5066 0.910   0.894   0.924       -0.006   -0.014    0.002         0.841             0.783          0.899 0.790                0.856                0.826                0.781
+   MLP head (features) - CV on val 5066 0.907   0.891   0.922       -0.009   -0.017   -0.001         0.825             0.770          0.879 0.774                0.839                0.798                0.749
+
+=== complete metadata (n=4504; cutoff 0.50 for recall/F2/accuracy) ===
+                             model    n   AUC  balanced_acc  malignant_recall  benign_recall    F2  mal_recall@spec0.80  mal_recall@spec0.85  mal_recall@spec0.90
+                          CNN only 4504 0.912         0.831             0.865          0.797 0.838                0.861                0.827                0.754
+                          MLP only 4504 0.789         0.719             0.771          0.667 0.733                0.611                0.532                0.430
+     Stack (logits) - fit on train 4504 0.917         0.843             0.820          0.867 0.817                0.865                0.834                0.770
+        Stack (logits) - CV on val 4504 0.917         0.842             0.836          0.848 0.826                0.867                0.834                0.785
+  Linear (features) - fit on train 4504 0.907         0.826             0.790          0.861 0.791                0.845                0.801                0.756
+     Linear (features) - CV on val 4504 0.896         0.814             0.786          0.842 0.784                0.823                0.778                0.696
+MLP head (features) - fit on train 4504 0.905         0.839             0.789          0.889 0.796                0.855                0.823                0.761
+   MLP head (features) - CV on val 4504 0.900         0.821             0.777          0.865 0.781                0.826                0.789                0.745
+
+=== site unknown (n=510; cutoff 0.50 for recall/F2/accuracy) ===
+                             model   n   AUC  balanced_acc  malignant_recall  benign_recall    F2  mal_recall@spec0.80  mal_recall@spec0.85  mal_recall@spec0.90
+                          CNN only 510 0.922         0.810             0.718          0.902 0.609                0.821                0.795                0.718
+                          MLP only 510 0.694         0.500             0.000          1.000 0.000                0.359                0.231                0.205
+     Stack (logits) - fit on train 510 0.919         0.772             0.590          0.953 0.572                0.795                0.744                0.718
+        Stack (logits) - CV on val 510 0.914         0.739             0.513          0.966 0.521                0.846                0.744                0.744
+  Linear (features) - fit on train 510 0.912         0.760             0.564          0.955 0.553                0.872                0.769                0.590
+     Linear (features) - CV on val 510 0.921         0.722             0.487          0.958 0.487                0.846                0.769                0.718
+MLP head (features) - fit on train 510 0.906         0.754             0.538          0.970 0.550                0.846                0.769                0.692
+   MLP head (features) - CV on val 510 0.929         0.717             0.462          0.972 0.481                0.897                0.897                0.846
+
+dAUC_vs_CNN = AUC(model) - AUC(CNN only) with a 95% CI from resampling whole lesions; if the CI includes 0 the difference is not clearly real.

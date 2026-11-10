@@ -1,0 +1,3 @@
+,pred_Benign,pred_Malignant/Pre-Malignant
+true_Benign,2793,405
+true_Malignant/Pre-Malignant,401,1467
