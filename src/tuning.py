@@ -15,7 +15,7 @@ from config import (
     SAMPLE_SIZE, BATCH_SIZE, EPOCHS, LR, USE_SCHEDULER,
     USE_SMALL_SAMPLE, MODEL_NAME, USE_CLASS_WEIGHTS,
     CLASSIFICATION_MODE, EARLY_STOPPING_PATIENCE,
-    set_seed, SEED
+    set_seed, SEED, DAMPEN_WEIGHTING
 )
 from dataset import LesionDataset, make_tiny_sample, train_val_split, get_transforms
 from models import get_model
@@ -25,8 +25,8 @@ from metrics import generate_report, save_run
 # ---------------------------------------------------------------------------
 # What to tune
 # ---------------------------------------------------------------------------
-HYPERPARAM_NAME = "batch_size"
-HYPERPARAM_VALUES = [16, 32, 64, 128, 256]
+HYPERPARAM_NAME = "lr"
+HYPERPARAM_VALUES = [1e-6, 3e-6, 3e-5, 1e-4, 3e-4]
 
 
 
@@ -82,7 +82,7 @@ def run_one(hyperparam_value, train_df, val_df):
         model, train_loader, val_loader,
         epochs=EPOCHS, lr=lr, use_scheduler=USE_SCHEDULER,
         use_class_weights=USE_CLASS_WEIGHTS,
-        early_stopping_patience=EARLY_STOPPING_PATIENCE,
+        early_stopping_patience=EARLY_STOPPING_PATIENCE
     )
     report_results = generate_report(model, val_loader, class_names=train_dataset.classes)
 
@@ -93,6 +93,7 @@ def run_one(hyperparam_value, train_df, val_df):
         "use_scheduler": USE_SCHEDULER, "model": MODEL_NAME,
         "use_class_weights": USE_CLASS_WEIGHTS,
         "tuning_param": HYPERPARAM_NAME, "tuning_value": hyperparam_value,
+        "weight_balance_dampening": DAMPEN_WEIGHTING
     }
     run_dir = save_run(
         model,

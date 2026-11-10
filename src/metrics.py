@@ -27,7 +27,12 @@ def generate_report(model, val_loader, class_names):
     model.eval()
     all_preds, all_labels = [], []
     with torch.no_grad():
-        for images, labels in val_loader:
+        for batch in val_loader:
+            if len(batch) == 3:
+                images, labels, diagnosis = batch
+            else:
+                images, labels = batch
+                diagnosis = None
             images = images.to(DEVICE)
             outputs = model(images)
             preds = outputs.argmax(1).cpu().numpy()
@@ -39,7 +44,7 @@ def generate_report(model, val_loader, class_names):
     if len(class_names) == 2:
         ordered_names = BINARY_ORDER
     else:
-        ordered_names = RISK_GROUPED_ORDER
+        ordered_names = [c for c in RISK_GROUPED_ORDER if c in class_names]
 
     # Map each display-order class name back to its actual integer label
     # (class_names is in encoding order, e.g. LABEL_COLS or BINARY_CLASSES
@@ -109,7 +114,7 @@ def generate_report(model, val_loader, class_names):
         "majority_class_acc": majority_class_acc,
     }
 
-def plot_learning_curve(history, run_name, save_path=None):
+def plot_loss_curve(history, run_name, save_path=None):
     """Plots train vs val loss (and accuracy) over epochs. If save_path is
     given, saves the figure there instead of/alongside showing it."""
     epochs = range(1, len(history["train_loss"]) + 1)
@@ -134,12 +139,12 @@ def plot_learning_curve(history, run_name, save_path=None):
     ax2.legend()
     ax2.grid(alpha=0.3)
 
-    fig.suptitle(f"Learning curve — {run_name}")
+    fig.suptitle(f"Loss curve — {run_name}")
     fig.tight_layout()
 
     if save_path:
         fig.savefig(save_path, dpi=150)
-        print(f"Saved learning curve to: {save_path}")
+        print(f"Saved loss curve to: {save_path}")
 
     plt.close(fig)
     return fig
@@ -157,6 +162,10 @@ def save_run(model, run_name, config_dict, history, report_results, results_root
     run_dir = Path(results_root) / f"{timestamp}_{safe_name}"
     run_dir.mkdir(parents=True, exist_ok=True)
 
+    history = dict(history)
+    training_meta = history.pop("meta", {})
+    config_dict = {**config_dict, **training_meta}
+
     # Config snapshot — exact hyperparameters used for this run
     with open(run_dir / "config.json", "w") as f:
         json.dump(config_dict, f, indent=2, default=str)
@@ -164,8 +173,8 @@ def save_run(model, run_name, config_dict, history, report_results, results_root
     # Per-epoch history (loss/acc/lr/time)
     pd.DataFrame(history).to_csv(run_dir / "history.csv", index=False)
 
-    # Learning curve plot (train vs val loss/accuracy over epochs)
-    plot_learning_curve(history, run_name, save_path=run_dir / "learning_curve.png")
+    # Loss curve plot (train vs val loss/accuracy over epochs)
+    plot_loss_curve(history, run_name, save_path=run_dir / "loss_curve.png")
 
     # Classification report as CSV (easy to drop into a writeup table)
     pd.DataFrame(report_results["classification_report"]).transpose().to_csv(
